@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "sht31_driver.h"
+#include "mock_spi_driver.h"
 
 void setUp(void)
 {
