@@ -78,5 +78,3 @@ bool sht30_driver_clear_status_register(void);
 bool sht30_driver_break_command(void);
 
 #endif // _SHT30_DRIVER_H
-
-delete vim test
