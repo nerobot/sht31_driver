@@ -271,6 +271,7 @@ bool sht30_driver_break_command(void)
     return true;
 }
 
+// TODO Add the capability to get different single shot mode types 
 bool sht30_driver_get_single_shot_data(void)
 {
     start_send_address_then_16_bit_command(SHT_SINGLE_SHOT_MODE_HIGH_CLOCK_STRETCH);
