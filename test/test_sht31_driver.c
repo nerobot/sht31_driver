@@ -620,6 +620,7 @@ void test_break_command_successful(void)
 ///////////////////////////////////////////////////////////////////////////////
 // Single shot data acquisition
 ///////////////////////////////////////////////////////////////////////////////
+
 void test_single_shot_data_acquisition_mode_all_ok_no_clock_stretching(void)
 {
     expect_start_and_send_address_write(true, true, true, 
@@ -627,8 +628,8 @@ void test_single_shot_data_acquisition_mode_all_ok_no_clock_stretching(void)
     i2c_driver_stop_Expect();
     expect_start_and_send_address_read(true);
 
-    expect_read_three_data_values(true, true, true, 0xBE, 0xEF, 0x91);
-    expect_read_three_data_values(true, true, false, 0xBE, 0xEF, 0x91);
+    expect_read_three_data_values(true, true, true, 0xBE, 0xEF, 0x92);
+    expect_read_three_data_values(true, true, false, 0xBE, 0xEF, 0x92);
 
     i2c_driver_stop_Expect();
 
@@ -636,5 +637,37 @@ void test_single_shot_data_acquisition_mode_all_ok_no_clock_stretching(void)
     TEST_ASSERT(success);
 }
  
+
+void test_single_shot_data_get_temperature_incorrect_returns_false(void)
+{
+    expect_start_and_send_address_write(true, true, true, 
+            SHT_SINGLE_SHOT_MODE_HIGH_CLOCK_STRETCH);
+    i2c_driver_stop_Expect();
+    expect_start_and_send_address_read(true);
+
+    expect_read_three_data_values(true, true, true, 0xBE, 0xEF, 0x00);
+    //expect_read_three_data_values(true, true, false, 0xBE, 0xEF, 0x00);
+
+    i2c_driver_stop_Expect();
+
+    bool success = sht30_driver_get_single_shot_data();
+    TEST_ASSERT_FALSE(success);
+} 
+
+void test_single_shot_data_get_humidity_incorrect_returns_false(void)
+{
+    expect_start_and_send_address_write(true, true, true, 
+            SHT_SINGLE_SHOT_MODE_HIGH_CLOCK_STRETCH);
+    i2c_driver_stop_Expect();
+    expect_start_and_send_address_read(true);
+
+    expect_read_three_data_values(true, true, true, 0xBE, 0xEF, 0x92);
+    expect_read_three_data_values(true, true, false, 0xBE, 0xEF, 0x00);
+
+    i2c_driver_stop_Expect();
+
+    bool success = sht30_driver_get_single_shot_data();
+    TEST_ASSERT_FALSE(success);
+} 
 
 

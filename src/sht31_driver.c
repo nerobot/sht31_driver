@@ -287,6 +287,8 @@ bool sht30_driver_get_single_shot_data(void)
 
     if (crc != crc_calculated)
     {
+        i2c_driver_stop();
+        return false;
 //        return false;
     }
 
@@ -300,8 +302,8 @@ bool sht30_driver_get_single_shot_data(void)
 
     if (crc != crc_calculated)
     {
-   //     i2c_driver_stop();
-  //      return false;
+        i2c_driver_stop();
+        return false;
     }
 
     i2c_driver_stop();
