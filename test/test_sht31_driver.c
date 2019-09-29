@@ -79,6 +79,7 @@ void tearDown(void)
 ///////////////////////////////////////////////////////////////////////////////
 // Initialisations
 ///////////////////////////////////////////////////////////////////////////////
+
 void test_soft_reset_successful(void)
 {
     i2c_driver_start_Expect();
@@ -138,6 +139,10 @@ void test_soft_reset_no_ack_after_lsb_function_returns(void)
     sht30_driver_send_soft_reset();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Setting up periodic measurments
+///////////////////////////////////////////////////////////////////////////////
+
 void test_set_periodic_measurement_mode_all_ok(void)
 {
     i2c_driver_start_Expect();
@@ -186,6 +191,11 @@ void test_set_periodic_measurement_mode_no_ack_after_lsb(void)
     TEST_ASSERT_FALSE(success);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Fetching periodic measurements
+///////////////////////////////////////////////////////////////////////////////
+
+// TODO Clean up the functions below as there is a lot of duplication
 void test_fetch_periodic_data_all_ok(void)
 {
     i2c_driver_start_Expect();
@@ -490,6 +500,9 @@ void test_when_fetch_data_humidity_CRC_not_ok_failed(void)
     TEST_ASSERT_FALSE(success);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Reading the status register
+///////////////////////////////////////////////////////////////////////////////
 void test_read_status_register_all_ok(void)
 {
     expect_start_and_send_address_write(true, true, true, READ_STATUS_ADDRESS);
