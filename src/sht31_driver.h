@@ -33,6 +33,7 @@
 #define READ_STATUS_ADDRESS 0xF32D
 #define CLEAR_STATUS_ADDRESS 0x3041
 #define BREAK_COMMAND_ADDRESS 0x3093
+#define SHT_SINGLE_SHOT_MODE_HIGH_CLOCK_STRETCH 0x2C06
 
 void sht30_driver_create(void);
 
@@ -76,5 +77,7 @@ uint16_t sht30_driver_return_status_register(void);
 bool sht30_driver_clear_status_register(void);
 
 bool sht30_driver_break_command(void);
+
+bool sht30_driver_get_single_shot_data(void);
 
 #endif // _SHT30_DRIVER_H

@@ -270,3 +270,42 @@ bool sht30_driver_break_command(void)
     i2c_driver_stop();
     return true;
 }
+
+bool sht30_driver_get_single_shot_data(void)
+{
+    start_send_address_then_16_bit_command(SHT_SINGLE_SHOT_MODE_HIGH_CLOCK_STRETCH);
+    i2c_driver_stop();
+    start_send_address_read();
+
+    // TODO: the =0 below can probably be removed
+    temperature = 0;
+    temperature = (i2c_driver_read_data(true) << 8);
+    temperature |= i2c_driver_read_data(true);
+
+    uint8_t crc            = i2c_driver_read_data(true);
+    uint8_t crc_calculated = calculate_crc(temperature);
+
+    if (crc != crc_calculated)
+    {
+//        return false;
+    }
+
+    // TODO: the =0 below can probably be removed
+    humidity = 0;
+    humidity = (i2c_driver_read_data(true) << 8);
+    humidity |= i2c_driver_read_data(true);
+
+    crc            = i2c_driver_read_data(false);
+    crc_calculated = calculate_crc(humidity);
+
+    if (crc != crc_calculated)
+    {
+   //     i2c_driver_stop();
+  //      return false;
+    }
+
+    i2c_driver_stop();
+
+    return true;
+}
+
